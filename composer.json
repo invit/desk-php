@@ -1,0 +1,26 @@
+{
+    "name": "bradleyboy/desk-php",
+    "type": "library",
+    "description": "A PHP client library for Desk.com's API",
+    "keywords": ["desk", "api", "helpdesk", "support"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brad Daily",
+            "homepage": "https://github.com/bradleyboy"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Desk\\": "src/",
+            "Desk\\Tests\\": "tests/"
+        }
+    }
+}
