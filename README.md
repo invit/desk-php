@@ -1,7 +1,7 @@
 desk-php
 ========
 
-PHP wrapper for Desk.com's API. A work in progress. Currently, only the "Customer" endpoint is hooked up. Requires PHP 5.4+. Contributions appreciated.
+PHP wrapper for Desk.com's API. A work in progress. Currently, only the "Customers" endpoint is hooked up. Requires PHP 5.4+. Contributions appreciated.
 
 Installation
 ------------
