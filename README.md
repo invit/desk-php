@@ -4,8 +4,9 @@ desk-php
 PHP wrapper for Desk.com's API. A work in progress. Currently, only the "Customer" endpoint is hooked up. Requires PHP 5.4+. Contributions appreciated.
 
 Installation
-============
-Not yet published to packager since it is half-baked. You can use it by adding the repository to your composer.json file:
+------------
+
+Not yet published to packagist since it is half-baked. You can use it by adding the repository to your composer.json file:
 
 ```js
 "repositories": [
@@ -20,7 +21,7 @@ Not yet published to packager since it is half-baked. You can use it by adding t
 ```
 
 Usage
-=====
+-----
 
 ```php
 use Desk\Desk;
