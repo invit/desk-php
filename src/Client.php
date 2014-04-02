@@ -5,8 +5,8 @@ namespace Desk;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Stream\Stream;
 
-class Client {
-
+class Client
+{
     const VERSION = 'v2';
 
     public $httpClient;
@@ -21,21 +21,34 @@ class Client {
         ]);
     }
 
+    /**
+     * @param string $responder
+     */
     public function get($url, $params = [], $responder = null)
     {
         return $this->request('GET', $url, $params, $responder);
     }
 
+    /**
+     * @param string $url
+     * @param string $responder
+     */
     public function post($url, $data = [], $responder = null)
     {
         return $this->request('POST', $url, $data, $responder);
     }
 
+    /**
+     * @param string $responder
+     */
     public function patch($url, $data, $responder = null)
     {
         return $this->request('PATCH', $url, $data, $responder);
     }
 
+    /**
+     * @param string $method
+     */
     private function request($method, $url, $params, $responder = null)
     {
         $method = strtolower($method);
