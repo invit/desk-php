@@ -33,7 +33,8 @@ abstract class AbstractListResponse implements \Countable, \ArrayAccess, \Iterat
         return $this->entries;
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->entries[] = $value;
         } else {

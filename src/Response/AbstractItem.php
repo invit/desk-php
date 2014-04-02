@@ -18,6 +18,9 @@ abstract class AbstractItem
         $this->inflector = Inflector::get();
     }
 
+    /**
+     * @param string $name
+     */
     protected function castValue($name)
     {
         $value = $this->data[$name];

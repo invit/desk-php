@@ -4,12 +4,17 @@ namespace Desk;
 
 use Desk\Api\Customers;
 
-class Desk {
-
+class Desk
+{
     protected $client;
 
     protected $apis = [];
 
+    /**
+     * @param string $domain
+     * @param string $email
+     * @param string $password
+     */
     public function __construct($domain, $email, $password)
     {
         $this->client = new Client($domain, $email, $password);
@@ -38,6 +43,9 @@ class Desk {
         return $this->getApi('Customers');
     }
 
+    /**
+     * @param string $class
+     */
     protected function getApi($class)
     {
         $class = "\\" . __NAMESPACE__ . "\\Api\\" . $class;
