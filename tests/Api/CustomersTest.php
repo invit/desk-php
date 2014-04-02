@@ -48,6 +48,13 @@ class CustomersTest extends DeskTestCase
         $this->assertEquals('work', $customer->emails[0]->type);
         $this->assertEquals('support@desk.com', $customer->emails[0]->value);
         $this->assertEquals(null, $customer->customFields->premiumUser);
+        $this->assertInstanceOf('Desk\Response\Customers\ListCustomerEmails', $customer->emails);
+        $this->assertEquals(['support@desk.com'], $customer->emails->getAddresses());
+
+        foreach ($customer->emails as $type => $email) {
+	        $this->assertEquals('work', $type);
+	        $this->assertEquals('support@desk.com', $email);
+        }
     }
 
     public function testGetCustomerList()
