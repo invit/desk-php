@@ -21,22 +21,22 @@ class Client {
         ]);
     }
 
-    public function get($url, $params = [], $responder = false)
+    public function get($url, $params = [], $responder = null)
     {
         return $this->request('GET', $url, $params, $responder);
     }
 
-    public function post($url, $data = [], $responder = false)
+    public function post($url, $data = [], $responder = null)
     {
         return $this->request('POST', $url, $data, $responder);
     }
 
-    public function patch($url, $data, $responder = false)
+    public function patch($url, $data, $responder = null)
     {
         return $this->request('PATCH', $url, $data, $responder);
     }
 
-    private function request($method, $url, $params, $responder = false)
+    private function request($method, $url, $params, $responder = null)
     {
         $method = strtolower($method);
 
@@ -58,10 +58,10 @@ class Client {
 
         $data = $response->json();
 
-        if ($responder) {
-            return new $responder($data);
-        } else {
+        if (is_null($responder)) {
             return $data;
+        } else {
+            return new $responder($data);
         }
     }
 }

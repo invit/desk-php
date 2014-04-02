@@ -11,7 +11,7 @@ class CustomerResponse extends AbstractItem
 
     public function __construct($data)
     {
-    	$this->emails = new ListCustomerEmails($data['emails']);
-    	parent::__construct($data);
+        $this->emails = new ListCustomerEmails($data['emails']);
+        parent::__construct($data);
     }
 }

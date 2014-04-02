@@ -4,23 +4,23 @@ namespace Desk\Response\Customers;
 
 class ListCustomerEmails implements \ArrayAccess, \Iterator
 {
-	protected $data;
-	private $position = 0;
+    protected $data;
+    private $position = 0;
 
-	public function __construct($data)
-	{
-		$this->data = $data;
-		$this->position = 0;
-	}
+    public function __construct($data)
+    {
+        $this->data = $data;
+        $this->position = 0;
+    }
 
-	public function getAddresses()
-	{
-		return array_map(function ($item) {
-			return $item['value'];
-		}, $this->data);
-	}
+    public function getAddresses()
+    {
+        return array_map(function ($item) {
+            return $item['value'];
+        }, $this->data);
+    }
 
-	public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value) {
         if (is_null($offset)) {
             $this->data[] = $value;
         } else {

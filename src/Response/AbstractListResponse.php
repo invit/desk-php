@@ -2,8 +2,6 @@
 
 namespace Desk\Response;
 
-use Desk\Response\Customers\CustomerResponse;
-
 abstract class AbstractListResponse implements \Countable
 {
     protected $data;
