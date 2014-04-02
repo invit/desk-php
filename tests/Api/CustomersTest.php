@@ -85,6 +85,12 @@ class CustomersTest extends DeskTestCase
         $this->assertEquals('GET', $request->getMethod());
         $this->assertEquals('https://domain.desk.com/api/v2/customers/search?email=support%40desk.com', $request->getUrl());
         $this->assertEquals('email=support%40desk.com', (string) $request->getQuery());
+
+        $this->assertInstanceOf('Desk\Response\Customers\CustomerResponse', $results[0]);
+
+        foreach ($results as $customer) {
+            $this->assertEquals('Bard', $customer->lastName);
+        }
     }
 
     public function testCreateCustomer()
