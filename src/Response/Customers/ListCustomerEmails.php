@@ -25,7 +25,8 @@ class ListCustomerEmails implements \ArrayAccess, \Iterator
         }, $this->data);
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->data[] = $value;
         } else {
@@ -33,35 +34,43 @@ class ListCustomerEmails implements \ArrayAccess, \Iterator
         }
     }
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->data[$offset]);
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->data[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return isset($this->data[$offset]) ? (object) $this->data[$offset] : null;
     }
 
-    public function rewind() {
+    public function rewind()
+    {
         $this->position = 0;
     }
 
-    public function current() {
+    public function current()
+    {
         return $this->data[$this->position]['value'];
     }
 
-    public function key() {
+    public function key()
+    {
         return $this->data[$this->position]['type'];
     }
 
-    public function next() {
+    public function next()
+    {
         ++$this->position;
     }
 
-    public function valid() {
+    public function valid()
+    {
         return isset($this->data[$this->position]);
     }
 }

@@ -41,35 +41,43 @@ abstract class AbstractListResponse implements \Countable, \ArrayAccess, \Iterat
         }
     }
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->entries[$offset]);
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->entries[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return isset($this->entries[$offset]) ? (object) $this->entries[$offset] : null;
     }
 
-    public function rewind() {
+    public function rewind()
+    {
         $this->position = 0;
     }
 
-    public function current() {
+    public function current()
+    {
         return $this->entries[$this->position];
     }
 
-    public function key() {
+    public function key()
+    {
         return $this->position;
     }
 
-    public function next() {
+    public function next()
+    {
         ++$this->position;
     }
 
-    public function valid() {
+    public function valid()
+    {
         return isset($this->entries[$this->position]);
     }
 }
