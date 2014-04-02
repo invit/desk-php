@@ -13,6 +13,11 @@ class ListCustomerEmails implements \ArrayAccess, \Iterator
         $this->position = 0;
     }
 
+    public function getData()
+    {
+        return $this->data;
+    }
+
     public function getAddresses()
     {
         return array_map(function ($item) {
