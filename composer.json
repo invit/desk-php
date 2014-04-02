@@ -13,7 +13,8 @@
     "require": {
         "php": ">=5.4.0",
         "guzzlehttp/guzzle": "~4.0",
-        "jms/serializer": "dev-master"
+        "icanboogie/inflector": "~1.2",
+        "nesbot/carbon": "~1.8"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7"

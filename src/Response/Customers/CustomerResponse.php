@@ -2,13 +2,9 @@
 
 namespace Desk\Response\Customers;
 
-class CustomerResponse
+use Desk\Response\AbstractItem;
+
+class CustomerResponse extends AbstractItem
 {
-
-	protected $emails;
-
-	public function getEmails()
-	{
-		return $this->emails;
-	}
+	protected $dates = [ 'created_at', 'updated_at' ];
 }

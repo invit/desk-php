@@ -4,7 +4,6 @@ namespace Desk;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Stream\Stream;
-use JMS\Serializer\SerializerBuilder;
 
 class Client {
 
@@ -57,13 +56,12 @@ class Client {
 
         $response = $this->httpClient->send($request);
 
-        $body = (string) $response->getBody();
+        $data = $response->json();
 
         if ($responder) {
-        	$serializer = SerializerBuilder::create()->build();
-        	return $serializer->deserialize($body, $responder, 'json');
+        	return new $responder($data);
         } else {
-	        return json_decode($body, true);
+	        return $data;
         }
     }
 }

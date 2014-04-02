@@ -2,13 +2,34 @@
 
 namespace Desk\Response;
 
-use JMS\Serializer\Annotation\Type;
+use Desk\Response\Customers\CustomerResponse;
 
-abstract class AbstractListResponse
+abstract class AbstractListResponse implements \Countable
 {
-	/**
-     * @Type("integer")
-     * @var int
-     */
-	protected $total_entries;
+	protected $data;
+	protected $entries = [];
+	protected $entryClass;
+
+	public function __construct($data)
+	{
+		$this->data = $data;
+
+		$entries = $this->data['_embedded']['entries'];
+
+		if (count($entries)) {
+			$this->entries = array_map(function ($item) {
+				return new $this->entryClass($item);
+			}, $entries);
+		}
+	}
+
+	public function count()
+	{
+		return count($this->entries);
+	}
+
+	public function getItems()
+	{
+		return $this->entries;
+	}
 }

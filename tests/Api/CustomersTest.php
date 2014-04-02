@@ -38,6 +38,18 @@ class CustomersTest extends DeskTestCase
 
         $this->assertEquals('/api/v2/customers/34528508', $request->getPath());
         $this->assertEquals('GET', $request->getMethod());
+
+        $this->assertInstanceOf('Desk\Response\Customers\CustomerResponse', $customer);
+        $this->assertInstanceOf('Carbon\Carbon', $customer->createdAt);
+        $this->assertInstanceOf('Carbon\Carbon', $customer->updatedAt);
+        $this->assertEquals('/api/v2/customers/34528508', $customer->identifier);
+        $this->assertEquals('Bard', $customer->lastName);
+
+        $this->assertEquals('work', $customer->emails[0]->type);
+        $this->assertEquals('support@desk.com', $customer->emails[0]->value);
+        $this->assertEquals(null, $customer->customFields->premiumUser);
+        // var_dump($customer->customFields);
+
     }
 
     public function testGetCustomerList()
@@ -48,7 +60,9 @@ class CustomersTest extends DeskTestCase
 
         $this->assertInstanceOf('Desk\Response\Customers\ListCustomersResponse', $all);
         $this->assertEquals(1, $all->count());
-        $this->assertEquals(1, count($all->items()));
+        $this->assertEquals(1, count($all->getItems()));
+        $this->assertInstanceOf('Desk\Response\Customers\CustomerResponse', $all->getItems()[0]);
+
         $this->assertEquals('/api/v2/customers', $request->getPath());
         $this->assertEquals('GET', $request->getMethod());
     }
@@ -61,51 +75,57 @@ class CustomersTest extends DeskTestCase
 
         $this->assertInstanceOf('Desk\Response\Customers\ListCustomersResponse', $results);
         $this->assertEquals(1, $results->count());
-        $this->assertEquals(1, count($results->items()));
+        $this->assertEquals(1, count($results->getItems()));
         $this->assertEquals('/api/v2/customers/search', $request->getPath());
         $this->assertEquals('GET', $request->getMethod());
         $this->assertEquals('https://domain.desk.com/api/v2/customers/search?email=support%40desk.com', $request->getUrl());
         $this->assertEquals('email=support%40desk.com', (string) $request->getQuery());
     }
 
-    // public function testCreateCustomer()
-    // {
-    //     $data = [
-    //         'email' => 'jack@doe.com',
-    //         'first_name' => 'Jack',
-    //         'last_name' => 'Doe',
-    //     ];
+    public function testCreateCustomer()
+    {
+    	$this->mock();
 
-    //     $this->desk->customers->create($data);
-    //     $request = $this->history->getLastRequest();
+        $data = [
+            'email' => 'jack@doe.com',
+            'first_name' => 'Jack',
+            'last_name' => 'Doe',
+        ];
 
-    //     $this->assertEquals('/api/v2/customers', $request->getPath());
-    //     $this->assertEquals('POST', $request->getMethod());
-    //     $this->assertEquals(json_encode($data), $request->getBody());
-    // }
+        $this->desk->customers->create($data);
+        $request = $this->history->getLastRequest();
 
-    // public function testUpdateCustomer()
-    // {
-    //     $data = [
-    //         'email' => 'jack@doe.com',
-    //         'first_name' => 'Jack',
-    //         'last_name' => 'Doe',
-    //     ];
+        $this->assertEquals('/api/v2/customers', $request->getPath());
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertEquals(json_encode($data), $request->getBody());
+    }
 
-    //     $this->desk->customers->setIdentifier('/api/v2/customers/111111')->update($data);
-    //     $request = $this->history->getLastRequest();
+    public function testUpdateCustomer()
+    {
+    	$this->mock();
 
-    //     $this->assertEquals('/api/v2/customers/111111', $request->getPath());
-    //     $this->assertEquals('PATCH', $request->getMethod());
-    //     $this->assertEquals(json_encode($data), $request->getBody());
-    // }
+        $data = [
+            'email' => 'jack@doe.com',
+            'first_name' => 'Jack',
+            'last_name' => 'Doe',
+        ];
 
-    // public function testCustomerCases()
-    // {
-    //     $this->desk->customers->setIdentifier('/api/v2/customers/111111')->cases();
-    //     $request = $this->history->getLastRequest();
+        $this->desk->customers->setIdentifier('/api/v2/customers/111111')->update($data);
+        $request = $this->history->getLastRequest();
 
-    //     $this->assertEquals('/api/v2/customers/111111/cases', $request->getPath());
-    //     $this->assertEquals('GET', $request->getMethod());
-    // }
+        $this->assertEquals('/api/v2/customers/111111', $request->getPath());
+        $this->assertEquals('PATCH', $request->getMethod());
+        $this->assertEquals(json_encode($data), $request->getBody());
+    }
+
+    public function testCustomerCases()
+    {
+    	$this->mock();
+
+        $this->desk->customers->setIdentifier('/api/v2/customers/111111')->cases();
+        $request = $this->history->getLastRequest();
+
+        $this->assertEquals('/api/v2/customers/111111/cases', $request->getPath());
+        $this->assertEquals('GET', $request->getMethod());
+    }
 }
