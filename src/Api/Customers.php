@@ -4,7 +4,7 @@ namespace Desk\Api;
 
 class Customers extends AbstractApi
 {
-	const CUSTOMER_RESPONSE_CLASS = 'Desk\Response\Customers\CustomerResponse';
+    const CUSTOMER_RESPONSE_CLASS = 'Desk\Response\Customers\CustomerResponse';
     const LIST_CUSTOMERS_RESPONSE_CLASS = 'Desk\Response\Customers\ListCustomersResponse';
 
     public function all()

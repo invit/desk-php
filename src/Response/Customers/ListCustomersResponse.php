@@ -6,5 +6,5 @@ use Desk\Response\AbstractListResponse;
 
 class ListCustomersResponse extends AbstractListResponse
 {
-	protected $entryClass = 'Desk\Response\Customers\CustomerResponse';
+    protected $entryClass = 'Desk\Response\Customers\CustomerResponse';
 }

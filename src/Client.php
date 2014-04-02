@@ -59,9 +59,9 @@ class Client {
         $data = $response->json();
 
         if ($responder) {
-        	return new $responder($data);
+            return new $responder($data);
         } else {
-	        return $data;
+            return $data;
         }
     }
 }
