@@ -12,22 +12,29 @@ use GuzzleHttp\Stream\Stream;
 class CustomersTest extends DeskTestCase
 {
     protected $history;
+    protected $client;
+    protected $mock;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->client = $this->desk->getHttpClient();
+
+        $this->mock = new Mock();
+        $this->history = new History();
+
+        $this->client->getEmitter()->attach($this->mock);
+        $this->client->getEmitter()->attach($this->history);
+    }
 
     protected function mock($jsonString = '')
     {
-        $client = $this->desk->getHttpClient();
-
-        $mock = new Mock();
-        $mock->addResponse(new Response(
+        $this->mock->addResponse(new Response(
             200,
             array(),
             Stream::factory($jsonString)
         ));
-
-        $this->history = new History();
-
-        $client->getEmitter()->attach($mock);
-        $client->getEmitter()->attach($this->history);
     }
 
     public function testGetCustomer()
@@ -127,6 +134,12 @@ class CustomersTest extends DeskTestCase
         $this->assertEquals('/api/v2/customers/111111', $request->getPath());
         $this->assertEquals('PATCH', $request->getMethod());
         $this->assertEquals(json_encode($data), $request->getBody());
+
+        $this->mock();
+        $this->desk->customers->update($data);
+        $request = $this->history->getLastRequest();
+
+        $this->assertEquals('/api/v2/customers/111111', $request->getPath());
     }
 
     public function testCustomerCases()
