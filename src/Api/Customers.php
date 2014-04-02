@@ -4,9 +4,13 @@ namespace Desk\Api;
 
 class Customers extends AbstractApi
 {
+
+	const CUSTOMER_RESPONSE_CLASS = 'Desk\Response\Customers\CustomerResponse';
+    const LIST_CUSTOMERS_RESPONSE_CLASS = 'Desk\Response\Customers\ListCustomersResponse';
+
     public function all()
     {
-        return $this->client->get('customers');
+        return $this->client->get('customers', [], self::LIST_CUSTOMERS_RESPONSE_CLASS);
     }
 
     public function get()
@@ -16,7 +20,7 @@ class Customers extends AbstractApi
 
     public function search($params = [])
     {
-        return $this->client->get('customers/search', $params);
+        return $this->client->get('customers/search', $params, self::LIST_CUSTOMERS_RESPONSE_CLASS);
     }
 
     public function create($data = [])

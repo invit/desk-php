@@ -4,6 +4,7 @@ namespace Desk;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Stream\Stream;
+use JMS\Serializer\SerializerBuilder;
 
 class Client {
 
@@ -21,22 +22,22 @@ class Client {
         ]);
     }
 
-    public function get($url, $params = [])
+    public function get($url, $params = [], $responder = false)
     {
-        return $this->request('GET', $url, $params);
+        return $this->request('GET', $url, $params, $responder);
     }
 
-    public function post($url, $data = [])
+    public function post($url, $data = [], $responder = false)
     {
-        return $this->request('POST', $url, $data);
+        return $this->request('POST', $url, $data, $responder);
     }
 
-    public function patch($url, $data)
+    public function patch($url, $data, $responder = false)
     {
-        return $this->request('PATCH', $url, $data);
+        return $this->request('PATCH', $url, $data, $responder);
     }
 
-    private function request($method, $url, $params)
+    private function request($method, $url, $params, $responder = false)
     {
         $method = strtolower($method);
 
@@ -55,6 +56,14 @@ class Client {
         }
 
         $response = $this->httpClient->send($request);
-        return $response->json();
+
+        $body = (string) $response->getBody();
+
+        if ($responder) {
+        	$serializer = SerializerBuilder::create()->build();
+        	return $serializer->deserialize($body, $responder, 'json');
+        } else {
+	        return json_decode($body, true);
+        }
     }
 }
