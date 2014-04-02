@@ -1,6 +1,8 @@
 desk-php
 ========
 
+[![Build Status](https://travis-ci.org/bradleyboy/desk-php.svg?branch=master)](https://travis-ci.org/bradleyboy/desk-php) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bradleyboy/desk-php/badges/quality-score.png?s=eadc9bb3010e34e2a665efb6334d55a2299404f5)](https://scrutinizer-ci.com/g/bradleyboy/desk-php/)
+
 PHP wrapper for Desk.com's API. A work in progress. Currently, only the "Customers" endpoint is hooked up. Requires PHP 5.4+. Contributions appreciated.
 
 Installation
