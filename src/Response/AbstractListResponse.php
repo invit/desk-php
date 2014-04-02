@@ -7,10 +7,12 @@ abstract class AbstractListResponse implements \Countable, \ArrayAccess, \Iterat
     protected $data;
     protected $entries = [];
     protected $entryClass;
+    protected $position = 0;
 
     public function __construct($data)
     {
         $this->data = $data;
+        $this->position = 0;
 
         $entries = $this->data['_embedded']['entries'];
 
