@@ -4,13 +4,16 @@ namespace Desk\Tests;
 
 use Desk\Desk;
 
-class DeskTest extends \PHPUnit_Framework_TestCase
+class DeskTest extends DeskTestCase
 {
-    public function testGetApi()
+    public function setUp()
     {
-        $desk = new Desk('domain', 'john@doe.com', 'password');
+        parent::setUp();
+    }
 
-        $customers = $desk->customers;
-        $this->assertInstanceOf('Desk\Api\Customers', $customers);
+    public function testInstantiation()
+    {
+        $customer = $this->desk->customer();
+        $this->assertInstanceOf('Desk\Objects\CustomerEntry', $customer);
     }
 }

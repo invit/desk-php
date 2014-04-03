@@ -1,28 +1,45 @@
 <?php
 
-namespace Desk\Response\Customers;
+namespace Desk\Objects;
 
-class ListCustomerEmails implements \ArrayAccess, \Iterator
+class ContactList implements \Countable, \ArrayAccess, \Iterator
 {
     protected $data;
     private $position = 0;
+    public $values = [];
+    protected $types = [];
 
     public function __construct($data)
     {
         $this->data = $data;
         $this->position = 0;
+
+        $this->values = array_map(function ($item) {
+            return $item['value'];
+        }, $this->data);
+
+        $this->types = array_map(function ($item) {
+            return $item['type'];
+        }, $this->data);
+    }
+
+    public function __get($name)
+    {
+        if (in_array($name, ['home', 'work', 'mobile', 'other'])) {
+            return in_array($name, $this->types) ? $this->values[array_search($name, $this->types)] : null;
+        }
+
+        throw new \UnexpectedValueException(sprintf('Invalid property: %s', $name));
+    }
+
+    public function count()
+    {
+        return count($this->data);
     }
 
     public function getData()
     {
         return $this->data;
-    }
-
-    public function getAddresses()
-    {
-        return array_map(function ($item) {
-            return $item['value'];
-        }, $this->data);
     }
 
     public function offsetSet($offset, $value)
