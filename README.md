@@ -28,8 +28,12 @@ Usage
 ```php
 use Desk\Desk;
 
-// Desk uses basic auth. For example, myaccount.desk.com:
+// With basic auth. For example, myaccount.desk.com:
 $desk = new Desk('myaccount', 'john@doe.com', 'password');
+
+
+// With oauth. For example, myaccount.desk.com:
+$desk = new Desk('myaccount', null, null, 'myconsumerkey', 'myconsumersecret', 'mytoken', 'mytokensecret');
 
 // Get all customers
 $customers = $desk->customers->all();

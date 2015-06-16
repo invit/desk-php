@@ -4,6 +4,7 @@ namespace Desk;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 class Client
 {
@@ -11,14 +12,24 @@ class Client
 
     public $httpClient;
 
-    public function __construct($domain, $email, $password)
+    public function __construct($domain, $email = null, $password = null, $consumerKey = null, $consumerSecret = null, $token = null, $tokenSecret = null)
     {
         $this->httpClient = new GuzzleClient([
             'base_url' => [ 'https://{account}.desk.com', ['account' => $domain] ],
-            'defaults' => [
-                'auth' => [ $email, $password ]
-            ]
         ]);
+
+        if (null !== $email) {
+            $this->httpClient->setDefaultOption('auth', [$email, $password]);
+        } else {
+            $this->httpClient->setDefaultOption('auth', 'oauth');
+            $oauth = new Oauth1([
+                'consumer_key'    => $consumerKey,
+                'consumer_secret' => $consumerSecret,
+                'token'           => $token,
+                'token_secret'    => $tokenSecret
+            ]);
+            $this->httpClient->getEmitter()->attach($oauth);
+        }
     }
 
     /**

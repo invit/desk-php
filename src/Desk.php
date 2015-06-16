@@ -2,8 +2,6 @@
 
 namespace Desk;
 
-use Desk\Api\Customers;
-
 class Desk
 {
     protected $client;
@@ -15,9 +13,9 @@ class Desk
      * @param string $email
      * @param string $password
      */
-    public function __construct($domain, $email, $password)
+    public function __construct($domain, $email = null, $password = null, $consumerKey = null, $consumerSecret = null, $token = null, $tokenSecret = null)
     {
-        $this->client = new Client($domain, $email, $password);
+        $this->client = new Client($domain, $email, $password, $consumerKey, $consumerSecret, $token, $tokenSecret);
     }
 
     public function __get($name)
