@@ -21,7 +21,8 @@ class Desk
     public function __get($name)
     {
        $allowed = array(
-           'customers'
+           'customers',
+           'cases',
        );
 
        if (in_array($name, $allowed)) {
@@ -39,6 +40,11 @@ class Desk
     public function customers()
     {
         return $this->getApi('Customers');
+    }
+
+    public function cases()
+    {
+        return $this->getApi('Cases');
     }
 
     /**
